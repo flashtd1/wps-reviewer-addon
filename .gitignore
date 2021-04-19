@@ -1,0 +1,9 @@
+# 依赖
+node_modules
+
+# 生成
+dist
+wps-addon-build
+
+# 配置文件
+local_env.json
