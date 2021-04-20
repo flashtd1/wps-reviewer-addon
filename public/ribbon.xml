@@ -1,7 +1,7 @@
 <customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui" onLoad="ribbon.OnAddinLoad">
     <ribbon startFromScratch="false">
         <tabs>
-            <tab id="wpsAddinTab" label="审校123">
+            <tab id="wpsAddinTab" label="审校demo">
 				<group id="btnDemoGroup" label="group1">
                     <!-- <button id="btnShowMsg" label="弹出消息框" onAction="ribbon.OnAction" getEnabled="ribbon.OnGetEnabled"  getImage="ribbon.GetImage" visible="true" size="large"/> -->
                     <!-- <button id="btnIsEnbable" getLabel="ribbon.OnGetLabel" onAction="ribbon.OnAction" enabled="true"  getImage="ribbon.GetImage" visible="true" size="large"/> -->
