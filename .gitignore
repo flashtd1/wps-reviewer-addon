@@ -5,5 +5,8 @@ node_modules
 dist
 wps-addon-build
 
+# 临时文件
+public/.debugTemp
+
 # 配置文件
 local_env.json
