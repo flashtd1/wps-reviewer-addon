@@ -3,6 +3,7 @@
   <div class="divItem">
     <div>文档文件名为：<span>{{docName}}</span></div>
     <el-button type="primary" size="mini" @click="review">分析</el-button>
+    <el-button type="primary" size="mini" @click="clearReview">清空分析结果</el-button>
     <el-button type="primary" size="mini" @click="clearHighlight">清空批注</el-button>
   </div>
   <div class="review-result">
@@ -41,7 +42,6 @@
 <script>
 import axios from 'axios'
 import taskPane from './js/taskpane.js'
-import taskpane from './js/taskpane.js'
 let words = []
 export default {
   name: 'TaskPane',
@@ -86,13 +86,17 @@ export default {
       this.datas = resData
       this.isLoading = false
     },
+    clearReview () {
+      this.datas = []
+      words = []
+    },
     getTagWords (tag) {
       return words.filter((w) =>{
         return w.tag == tag
       })
     },
     clearHighlight() {
-      taskpane.clearHighlight()
+      taskPane.clearHighlight()
     },
     highlight (tag) {
       let ns = this.getTagWords(tag)
