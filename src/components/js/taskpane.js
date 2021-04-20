@@ -7,29 +7,8 @@ function onbuttonclick(idStr, param)
     }
     switch(idStr)
     {
-        case "dockLeft":{
-                let tsId = wps.PluginStorage.getItem("taskpane_id")
-                if (tsId){
-                    let tskpane = wps.GetTaskPane(tsId)
-                    tskpane.DockPosition = wps.Enum.msoCTPDockPositionLeft
-                }
-                break
-            }
-        case "dockRight":{
-            let tsId = wps.PluginStorage.getItem("taskpane_id")
-                if (tsId){
-                    let tskpane = wps.GetTaskPane(tsId)
-                    tskpane.DockPosition = wps.Enum.msoCTPDockPositionRight
-                }
-                break
-        }
-        case "hideTaskPane":{
-            let tsId = wps.PluginStorage.getItem("taskpane_id")
-                if (tsId){
-                    let tskpane = wps.GetTaskPane(tsId)
-                    tskpane.Visible = false
-                }
-                break
+        case "getString": {
+            return GetDoc()
         }
         case "addString":{
             let doc = wps.WpsApplication().ActiveDocument
@@ -44,10 +23,10 @@ function onbuttonclick(idStr, param)
         }
         case "getDocName":{
             let doc = wps.WpsApplication().ActiveDocument
-                if (!doc){
-                    return "当前没有打开任何文档"
-                }
-                return doc.Name
+            if (!doc){
+                return "当前没有打开任何文档"
+            }
+            return doc.Name
         }
         case "openWeb": {
             wps.OAAssist.ShellExecute(param)
@@ -56,6 +35,42 @@ function onbuttonclick(idStr, param)
     }
 }
 
+function GetDoc() {
+    let doc = wps.WpsApplication().ActiveDocument
+    if (doc) {
+        return doc.Range().Text
+    }
+    return ''
+}
+
+function hilight(ns) {
+    let selection = wps.WpsApplication().ActiveWindow.Selection
+    let find = selection.Find
+    selection.Start = selection.End = 0
+
+    for (let i = 0; i < ns.length; i++) {
+        let findResult = find.Execute(ns[i].word)
+        if (findResult) {
+            console.log(ns[i].word)
+            selection.Range.Comments.Add(selection.Range, ns[i].word)
+        }
+    }
+}
+
+function clearHighlight() {
+    let doc = wps.WpsApplication().ActiveDocument
+    let comments = doc.Comments
+    let commentData = []
+    for (let i = 1; i <= comments.Count; i++) {
+        commentData.push(comments.Item(i))
+    }
+    commentData.forEach((comment) => {
+        comment.Delete()
+    })
+}
+
 export default{
-    onbuttonclick
+    onbuttonclick,
+    hilight,
+    clearHighlight
 }
